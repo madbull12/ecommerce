@@ -9,7 +9,7 @@ import { useShopContext } from '../../lib/context';
 
 const ProductDetailsPage = () => {
     const router = useRouter();
-    const { increaseQty,decreaseQty,qty,cartItems } = useShopContext();
+    const { increaseQty,decreaseQty,qty,cartItems,addToCart,disableCart } = useShopContext();
     const { slug } = router.query;
     const [results] = useQuery({
         query:GET_SINGLE_PRODUCT,
@@ -23,7 +23,8 @@ const ProductDetailsPage = () => {
     console.log(data)
     const { data:product } = data?.products
     const { title,image,description } = product[0]?.attributes || {};
- 
+    
+
     
   return (
     <main className='max-w-7xl mx-auto min-h-screen text-white  p-2'>
@@ -41,7 +42,7 @@ const ProductDetailsPage = () => {
                         
                     </div>
                 </div>
-                <button className='bg-emerald-500 font-semibold px-4 py-1 rounded-sm w-full'>Add to Cart</button>
+                <button className='bg-emerald-500 font-semibold px-4 py-1 rounded-sm w-full disabled:cursor-not-allowed' disabled={disableCart} onClick={()=>addToCart(product[0])}>Add to Cart</button>
 
             </div>
         </div>
