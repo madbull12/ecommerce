@@ -7,7 +7,6 @@ export const GET_ALL_PRODUCTS = `
         title
         slug
         price
-        description
         image{
           data{
             attributes{
@@ -22,4 +21,28 @@ export const GET_ALL_PRODUCTS = `
   }
   }
 
+`
+
+export const GET_SINGLE_PRODUCT = `
+  query getProduct($slug:String!) {
+    products(filters:{slug:{eq:$slug}}) {
+      data{
+        attributes{
+          title
+          slug
+          price
+          description
+          image{
+            data{
+              attributes{
+                formats
+              }
+            }
+          }
+          
+        }
+        id
+      }
+    }
+  }
 `

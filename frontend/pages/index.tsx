@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Product from '../components/Product';
 import { IProduct } from '../interface';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 
 const Home: NextPage = () => {
@@ -41,7 +42,10 @@ const Home: NextPage = () => {
       </Head>
       <section className='grid grid-cols-1 md:grid-cols-3 gap-4 lg:grid-cols-4'>
         {products?.map((product:IProduct)=>(
-          <Product key={uuidv4()} product={product} />
+
+            <Product key={uuidv4()} product={product} />
+          
+       
         ))}
       </section>
     
