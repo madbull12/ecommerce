@@ -8,9 +8,8 @@ export const useShopContext = () => useContext<any>(ShopContext);
 
 export const ShopContextProvider = ({ children }:{ children:ReactNode }) => {
     const [qty,setQty] = useState(1);
-    const [showCart,setShowCart] = useState(false);
+    const [showCart,setShowCart] = useState<boolean>(false);
     const [cartItems,setCartItems] = useState<any>([]);
-    const[disableCart,setDisableCart] = useState<boolean>(false);
     const increaseQty = () => {
         setQty(prev=>prev+1);
     }
@@ -18,20 +17,34 @@ export const ShopContextProvider = ({ children }:{ children:ReactNode }) => {
         setQty(prev=>prev===1 ? 1 : prev-1);
     }
 
-    const addToCart = (product:any) => {
-        const exist = cartItems?.find((item:IProduct)=>item.attributes.slug === product.attributes.slug);
-
-        console.log(product)
-        console.log(cartItems)
+    const addToCart = (product:any,quantity:number) => {
+        const exist = cartItems?.find((item:any)=>item?.attributes.slug === product?.attributes.slug);
+        console.log(exist)
         if(exist) {
-            setDisableCart(true)
+            setCartItems(cartItems.map((_item:any)=>_item?.attributes.slug === product?.attributes.slug ? {
+                ...exist, quantity:exist.quantity + quantity
+            }:_item))
         } else {
-            setCartItems([...cartItems,product]);
-
+            setCartItems([...cartItems,{ ...product, quantity:quantity}])
         }
+
     }
 
-    return (<ShopContext.Provider value={{ qty,increaseQty,decreaseQty,showCart,setShowCart,cartItems,addToCart,disableCart }}>
+    const removeFromCart = (slug:string) => {
+        console.log(slug)
+        const exist = cartItems?.find((item:IProduct)=>item?.attributes.slug === slug);
+
+        if(exist?.quantity===1) {
+            setCartItems(cartItems?.filter((item:IProduct)=>item.attributes.slug !== slug));
+        } else {
+            setCartItems(cartItems?.map((item:IProduct)=>
+                item.attributes.slug === slug ? { ...exist,quantity:exist.quantity - 1 } : item
+            ))
+        }
+
+    }
+
+    return (<ShopContext.Provider value={{ qty,increaseQty,decreaseQty,showCart,setShowCart,cartItems,addToCart,removeFromCart }}>
         {children}
     </ShopContext.Provider>)
     

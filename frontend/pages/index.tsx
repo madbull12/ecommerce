@@ -6,12 +6,13 @@ import { GET_ALL_PRODUCTS } from '../lib/query';
 import { v4 as uuidv4 } from 'uuid';
 import Product from '../components/Product';
 import { IProduct } from '../interface';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useShopContext } from '../lib/context';
+
 
 
 const Home: NextPage = () => {
   // const client = useClient();
+  const { showCart } = useShopContext();
   const [{data,error,fetching}] = useQuery({
     query:GET_ALL_PRODUCTS
   });
@@ -48,7 +49,8 @@ const Home: NextPage = () => {
        
         ))}
       </section>
-    
+
+          
       
     </div>
   )

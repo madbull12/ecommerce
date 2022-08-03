@@ -5,7 +5,7 @@ import { useShopContext } from '../lib/context';
 
 const Header = () => {
     const[isLogin,setIsLogin] = useState(true);
-    const { cartItems } = useShopContext();
+    const { cartItems,setShowCart } = useShopContext();
 
   return (
     <nav className='text-white bg-transparent p-4'>
@@ -30,15 +30,15 @@ const Header = () => {
                        
                 
                 </Link>
-                <li className='duration-200 hover:text-emerald-500 ease-in-out cursor-pointer '>
-                    <Link href="/">
-                        <span className='relative'>
-                            <IoMdCart />
+                <li className='relative' onClick={()=>setShowCart(true)} >
+                    
+                        <span >
+                            <IoMdCart  className='duration-200 hover:text-emerald-500 ease-in-out cursor-pointer ' />
                             <span className='absolute -top-2 bg-emerald-500 rounded-full w-4 h-4 grid place-items-center -right-2 text-xs'>
                                 {cartItems.length}
                             </span>
                         </span>
-                    </Link>
+                  
                 </li>
             </ul>
         </div>
