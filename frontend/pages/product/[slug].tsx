@@ -6,6 +6,7 @@ import { useQuery } from 'urql'
 import { GET_SINGLE_PRODUCT } from '../../lib/query';
 import { AiFillMinusCircle } from 'react-icons/ai'
 import { useShopContext } from '../../lib/context';
+import { motion } from 'framer-motion'
 
 const ProductDetailsPage = () => {
     const router = useRouter();
@@ -24,14 +25,30 @@ const ProductDetailsPage = () => {
     const { data:product } = data?.products
     const { title,image,description } = product[0]?.attributes || {};
     
-    
+    const dropDown = {
+        hidden:{
+            opacity:0,
+            y:"-100vh"
+        },
+        show:{
+            opacity:1,
+            y:0,
+            transition:{
+                type:"spring",
+                stiffness:50,
+                damping:10
+            }
+        }
+    }
+
+
     
   return (
     <main className='max-w-7xl mx-auto min-h-screen text-white  p-2'>
         <div className='flex gap-y-4 flex-col md:flex-row md:gap-x-2 justify-around'>
             <Image  src={image?.data.attributes.formats.medium.url} alt={title} width={350} height={400} objectFit="cover" />
-            <div className='space-y-3'>
-                <p className='text-base md:text-lg font-semibold'>{title}</p>
+            <motion.div className='space-y-3' variants={dropDown} animate="show" initial="hidden">
+                <p  className='text-base md:text-lg font-semibold'>{title}</p>
                 <p className='text-gray-300 text-sm md:text-base'>{description}</p>
                 {/* <div className='flex items-center mt-4 gap-x-3 text-sm mb-4' >
                     <p>Quantity</p>
@@ -42,9 +59,9 @@ const ProductDetailsPage = () => {
                         
                     </div>
                 </div> */}
-                <button className='bg-emerald-500 font-semibold px-4 py-1 rounded-sm w-full disabled:cursor-not-allowed' disabled={disableCart} onClick={()=>addToCart(product[0],qty)}>Add to Cart</button>
+                <button className='bg-emerald-500 font-semibold px-4 py-1 rounded-sm w-full disabled:cursor-not-allowed'  onClick={()=>addToCart(product[0],qty)}>Add to Cart</button>
 
-            </div>
+            </motion.div>
         </div>
     </main>
   )

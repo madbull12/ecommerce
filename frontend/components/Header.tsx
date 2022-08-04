@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import  { IoIosLogIn, IoIosLogOut, IoMdCart }  from 'react-icons/io'
 import { useShopContext } from '../lib/context';
+import { motion } from 'framer-motion'
 
 const Header = () => {
     const[isLogin,setIsLogin] = useState(true);
@@ -32,11 +33,15 @@ const Header = () => {
                 </Link>
                 <li className='relative' onClick={()=>setShowCart(true)} >
                     
+
                         <span >
                             <IoMdCart  className='duration-200 hover:text-emerald-500 ease-in-out cursor-pointer ' />
-                            <span className='absolute -top-2 bg-emerald-500 rounded-full w-4 h-4 grid place-items-center -right-2 text-xs'>
-                                {cartItems.length}
-                            </span>
+                            {cartItems.length > 0 && (
+                                <motion.span animate={{ scale:1 }} initial={{ scale:0 }} className='absolute -top-2 bg-emerald-500 rounded-full w-4 h-4 grid place-items-center -right-2 text-xs'>
+                                    {cartItems.length}
+                                </motion.span>
+                            )}
+                    
                         </span>
                   
                 </li>

@@ -1,12 +1,13 @@
 import React, { ReactNode } from 'react'
 import { useShopContext } from '../lib/context'
+import { motion } from 'framer-motion'
 
 const Backdrop = ({ children }: {children:ReactNode}) => {
     const { setShowCart } = useShopContext()
   return (
-    <div className='bg-[#00000052] absolute top-0 right-0 bottom-0 left-0' onClick={()=>setShowCart(false)}>
+    <motion.div initial={{ opacity:0 }} exit={{ opacity:0 }} animate={{opacity:1}} className='bg-[#00000052] absolute h-full w-full z-50' onClick={()=>setShowCart(false)}>
         {children}
-    </div>
+    </motion.div>
   )
 }
 
