@@ -86,9 +86,9 @@ const Cart = () => {
         });
 
         console.log(res)
-        // const data = await res.json();
-        // console.log(await res.json())
-        // await stripe.redirectToCheckout({ sessionId:data?.id })
+        const data = await res.json();
+        console.log(data?.id)
+        await stripe.redirectToCheckout({ sessionId:data?.id })
     }
 
   return (
